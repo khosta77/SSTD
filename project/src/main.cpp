@@ -1,5 +1,5 @@
 #include <iostream>
-#include <stepanvector.h>
+#include "../include/stepanvector.h"
 
 using namespace std;
 

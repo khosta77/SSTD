@@ -1,25 +1,25 @@
-#include "stepanvector.h"
+#include "../include/stepandoublelist.h"
 
-StepanVector::StepanVector(){
+StepanDoubleList::StepanDoubleList(){
     first = last = NULL;
     count = 0;
 }
 
-int StepanVector::get_count(){
+int StepanDoubleList::get_count(){
     return count;
 }
 
-bool StepanVector::empty(){
+bool StepanDoubleList::empty(){
     return first == NULL;
 }
 
-component_vector *StepanVector::push(int data, component_vector *node = NULL){
+component_doublelist *StepanDoubleList::push(int data, component_doublelist *node = NULL){
     count++;
     if (node == NULL) {
       push_first(data);
       return first;
     }
-    component_vector *newnode = new component_vector;
+    component_doublelist *newnode = new component_doublelist;
     newnode->data = data;
     newnode->next = node;
     newnode->preveus = node->preveus;
@@ -28,11 +28,11 @@ component_vector *StepanVector::push(int data, component_vector *node = NULL){
     return newnode;
 }
 
-int StepanVector::get_value(component_vector *node){
+int StepanDoubleList::get_value(component_doublelist *node){
     return node->data;
 }
 
-component_vector *StepanVector::clear_node(component_vector *node){
+component_doublelist *StepanDoubleList::clear_node(component_doublelist *node){
     if (node == NULL) {
         return NULL;
     }
@@ -49,64 +49,36 @@ component_vector *StepanVector::clear_node(component_vector *node){
       delete node;
       return last;
     }
-    component_vector* prev = node->preveus;
+    component_doublelist* prev = node->preveus;
     prev->next = node->next;
     delete node;
     return prev;
 }
 
-component_vector *StepanVector::at(int i){
-    if (i == 0){
-        return first;
-    }
-    if (i == count - 1){
-//        std::cout << count / 2;
-        return last;
-    }
-//    return first;
-    component_vector *current;
-    int current_i;
-    if(i <= count/2){
-        current = first;
-        current_i = 0;
-        for(; current_i < i; current_i++){
-            current = current->next;
-        }
-    }
-    else {
-        current = last;
-        current_i = count - 1;
-        for(; current_i > i; current_i--){
-            current = current->preveus;
-        }
-    }
-    return current;
-}
-
-component_vector *StepanVector::next(component_vector *node){
+component_doublelist *StepanDoubleList::next(component_doublelist *node){
     if (empty()){
         return NULL;
     }
     return node->next;
 }
 
-component_vector *StepanVector::previous(component_vector *node){
+component_doublelist *StepanDoubleList::previous(component_doublelist *node){
     if (empty()){
         return NULL;
     }
     return node->preveus;
 }
 
-component_vector *StepanVector::get_first(){
+component_doublelist *StepanDoubleList::get_first(){
     return first;
 }
 
-component_vector *StepanVector::get_last(){
+component_doublelist *StepanDoubleList::get_last(){
     return last;
 }
 
-void StepanVector::push_first(int data){
-    component_vector *current = new component_vector;
+void StepanDoubleList::push_first(int data){
+    component_doublelist *current = new component_doublelist;
     current->data = data;
     current->preveus = NULL;
     current->next = first;
@@ -122,8 +94,8 @@ void StepanVector::push_first(int data){
     count++;
 }
 
-void StepanVector::push_last(int data){
-    component_vector *current = new component_vector;
+void StepanDoubleList::push_last(int data){
+    component_doublelist *current = new component_doublelist;
     current->data = data;
     current->preveus = last;
     current->next = NULL;
@@ -139,12 +111,12 @@ void StepanVector::push_last(int data){
     count++;
 }
 
-void StepanVector::print(bool tail){
+void StepanDoubleList::print(bool tail){
     if (empty()) {
         std::cout << "The stepandoublelist is empty" << std::endl;
         return;
     }
-    component_vector *current;
+    component_doublelist *current;
     if(tail){
         current = first;
         do {
@@ -162,9 +134,9 @@ void StepanVector::print(bool tail){
     std::cout << std::endl;
 }
 
-void StepanVector::clear(){
+void StepanDoubleList::clear(){
     while (first) {
-        component_vector *newfirst = first->next;
+        component_doublelist *newfirst = first->next;
         delete first;
         first = newfirst;
     }
@@ -172,6 +144,6 @@ void StepanVector::clear(){
     first = last = NULL;
 }
 
-StepanVector::~StepanVector(){
+StepanDoubleList::~StepanDoubleList(){
     clear();
 }

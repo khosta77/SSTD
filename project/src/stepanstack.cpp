@@ -1,4 +1,4 @@
-#include "stepanstack.h"
+#include "../include/stepanstack.h"
 #include <iostream>
 
 StepanStack::StepanStack(){
@@ -20,7 +20,7 @@ int StepanStack::top(){
     if(!empty()){
         return first->data;
     }
-    return NULL;
+    return 0;
 }
 
 void StepanStack::pop(){

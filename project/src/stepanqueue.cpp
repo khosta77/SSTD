@@ -1,4 +1,4 @@
-#include "stepanqueue.h"
+#include "../include/stepanqueue.h"
 
 StepanQueue::StepanQueue(){
     first = NULL;
