@@ -1,4 +1,4 @@
-#include "../include/stepanvector.h"
+#include "stepanvector.h"
 
 StepanVector::StepanVector(){
     first = last = NULL;
