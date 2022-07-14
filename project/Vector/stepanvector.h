@@ -2,11 +2,6 @@
 #define STEPANVECTOR_H
 
 #include <iostream>
-//#include <algorithm>
-//#include <stdexcept>
-//#include <utility>
-//#include <exception>
-//#include <execution>
 #include <algorithm>
 #include <iterator>
 
@@ -40,17 +35,10 @@ public:
 
         bool operator==(iterator other) const { return _cur != other._cur; }
         bool operator!=(iterator other) const { return _cur != other._cur; }
-
-        // Your code goes here?..
-
-    private:
-        // Your code hoes here...
     };
 //------------------------------------------------------------------------------------------------------------
     // Constructor & destructor
-    StepanVector() {}
-
-    StepanVector(const size_t &n) {
+    StepanVector(const size_t &n = 0) {
         _arr = new T[n]{};
         _size = n;
     }
@@ -133,7 +121,6 @@ public:
 //------------------------------------------------------------------------------------------------------------
     // Element access
     T &operator[] (const size_t i) noexcept { return _arr[i]; }
-
     T &operator[] (const size_t i) const noexcept { return _arr[i]; }
 
     T &at (const size_t i) {
@@ -149,6 +136,15 @@ public:
         }
         return _arr[i];
     }
+
+    T &front() { return at(0); }
+    T &front() const { return at(0); }
+
+    T &back() { return at(size() - 1); }
+    T &back() const { return at(size() - 1); }
+
+    T *data() noexcept { return _arr; }
+    T *data() const noexcept { return _arr; }
 //------------------------------------------------------------------------------------------------------------
     // Modifiers
 //    void assign()
