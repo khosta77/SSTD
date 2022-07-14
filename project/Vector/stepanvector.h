@@ -5,146 +5,85 @@
 #include <algorithm>
 #include <stdexcept>
 #include <utility>
+#include <exception>
+#include <execution>
 
 template<typename T>
 class StepanVector {
 private:
     T *_arr;
-    size_t _size{};
-    size_t _capacity;
+    size_t _size;
 
 public:
+    class iterator {
+    private:
+        T* _cur;
+    public:
+
+        iterator(T* elem) : _cur(elem) {}
+
+        iterator& operator=(const iterator& IT) { _cur = *IT; }
+
+        iterator operator++(int n) { return *_cur++; }
+        iterator operator--(int n) { return *_cur--; }
+        iterator& operator++() { return *++_cur; }
+        iterator& operator--() { return *--_cur; }
+
+
+        reference operator*() const { return *_cur; }
+
+        bool operator==(iterator other) const { return _cur != other._cur; }
+        bool operator!=(iterator other) const { return _cur != other._cur; }
+
+        // Your code goes here?..
+
+    private:
+        // Your code hoes here...
+    };
+
     // Constructor & destructor
-    StepanVector() {
-
-    }
-
-    StepanVector (const StepanVector<T> &SV) {
-
-    }
-
-    StepanVector<T> &operator= (const StepanVector<T> &SV) {
-
-    }
-
-    ~StepanVector() {
-
-    }
+    StepanVector() {}
+//    StepanVector (const StepanVector<T> &SV) {}
+//    StepanVector<T> &operator= (const StepanVector<T> &SV) {}
+//    ~StepanVector() {}
 
     // Iterators
-
+    iterator begin() { return _arr; }
+    iterator end() { return _arr + _size; }
 
     // Capacity
-    size_t size() const {
-        return count;
-    }
+    size_t size() const { return _size; }
 
     // Element access
-    T &operator[] (const size_t i) {
-        return at(i);
-    }
+    T &operator[] (const size_t i) noexcept { return _arr[i]; }
 
-    T &operator[] (const size_t i) const {
-        return at(i);
-    }
+    T &operator[] (const size_t i) const noexcept { return _arr[i]; }
 
     T &at (const size_t i) {
-        if (i == 0){
-            return first->data;
+        if (i < 0 && i > _size) {
+            throw std::out_of_range("in at");
         }
-
-        if (i == count - 1){
-            return last->data;
-        }
-
-        component_vector<T> *current;
-        size_t current_i;
-        if(i <= count/2){
-            current = first;
-            current_i = 0;
-
-            for(; current_i < i; current_i++){
-                current = current->next;
-            }
-        } else {
-            current = last;
-            current_i = count - 1;
-
-            for(; current_i > i; current_i--){
-                current = current->preveus;
-            }
-        }
-
-        return current->data;
+        return _arr[i];
     }
 
     T &at (const size_t i) const {
-        if (i == 0){
-            return first->data;
+        if (i < 0 && i > _size) {
+            throw std::out_of_range("in at");
         }
-
-        if (i == count - 1){
-            return last->data;
-        }
-
-        component_vector<T> *current;
-        size_t current_i;
-        if(i <= count/2){
-            current = first;
-            current_i = 0;
-
-            for(; current_i < i; current_i++){
-                current = current->next;
-            }
-        } else {
-            current = last;
-            current_i = count - 1;
-
-            for(; current_i > i; current_i--){
-                current = current->preveus;
-            }
-        }
-
-        return current->data;
+        return _arr[i];
     }
 
     // Modifiers
 //    void assign()
 
-    void push_back(const T& val) {
-        component_vector<T> *current = new component_vector<T>;
-        current->data{val};
-        current->preveus = last;
-        current->next = nullptr;
-
-        if (last != 0){
-            last->next = current;
-        }
-
-        if (count == 0){
-            first = last = current;
-        } else {
-            last = current;
-        }
-
-        count++;
-    }
+    void push_back(const T& val) {}
 
 //    void pop_back();
 //    void insert();
 //    void erase();
 //    void swap();
 
-    void clear() {
-        while (first) {
-            component_vector<T> *newfirst = first->next;
-            delete first;
-            first = newfirst;
-        }
-
-        count = 0;
-        first = last = NULL;
-    }
+    void clear() {}
 
 //    void emplace();
 //    void emplace_back();
