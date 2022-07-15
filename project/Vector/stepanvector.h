@@ -78,6 +78,12 @@ public:
     // Iterators
     iterator begin() { return _arr; }
     iterator end() { return _arr + _size; }
+
+//    reverse_iterator rbegin() {}
+//    reverse_iterator rend() {}
+
+//    const_iterator cbegin() {}
+//    const_iterator cend() {}
 //------------------------------------------------------------------------------------------------------------
     // Capacity
     size_t size() const  noexcept { return _size; }
