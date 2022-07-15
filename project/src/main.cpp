@@ -5,18 +5,19 @@
 using namespace std;
 
 int main(){
-    StepanVector<int> vec(5);
+    std::vector<int> foo = {10, 20, 30};   // three ints with a value of 100
+    std::vector<int> bar (5,200);   // five ints with a value of 200
 
-    int* p = vec.data();
+    foo.swap(bar);
 
-    *p = 10;
-    ++p;
-    *p = 20;
-    p[2] = 100;
+    std::cout << "foo contains:";
+    for (unsigned i=0; i<foo.size(); i++)
+        std::cout << ' ' << foo[i];
+    std::cout << '\n';
 
-    std::cout << "myvector contains:";
-    for (unsigned i=0; i<vec.size(); ++i)
-        std::cout << ' ' << vec[i];
+    std::cout << "bar contains:";
+    for (unsigned i=0; i<bar.size(); i++)
+        std::cout << ' ' << bar[i];
     std::cout << '\n';
 
     return 0;
