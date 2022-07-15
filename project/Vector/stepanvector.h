@@ -18,23 +18,23 @@ public:
         T* _cur;
     public:
         iterator() {}
-        iterator(T *elem) : _cur(elem) {}
+        iterator(T *first) : _cur(first) {}
 
-        T& operator=(const iterator &IT) { _cur = IT._cur; }
+        iterator& operator=(const iterator &IT) = default;  //{ _cur = IT._cur; }
 
         T& operator+ (size_t n) { return *(_cur + n); }
         T& operator- (size_t n) { return *(_cur - n); }
 
-        T operator++(int n) { return *_cur++; }
-        T operator--(int n) { return *_cur--; }
+        T& operator++(int n) { return *_cur++; }
+        T& operator--(int n) { return *_cur--; }
         T& operator++() { return *++_cur; }
         T& operator--() { return *--_cur; }
 
 
-        T operator*() const { return *_cur; }
+        T& operator*() const { return *_cur; }
 
-        bool operator==(iterator other) const { return _cur != other._cur; }
-        bool operator!=(iterator other) const { return _cur != other._cur; }
+        bool operator==(const iterator& other) const { return _cur == other._cur; }
+        bool operator!=(const iterator& other) const { return _cur != other._cur; }
     };
 //------------------------------------------------------------------------------------------------------------
     // Constructor & destructor
@@ -147,19 +147,48 @@ public:
     T *data() const noexcept { return _arr; }
 //------------------------------------------------------------------------------------------------------------
     // Modifiers
-//    void assign()
+    void assign(iterator first, iterator last) {
+        if (this->_size > 0) {
+            clear();
+        }
+
+        for (auto it = first; it != last; it++) {
+            push_back(*it);
+        }
+    }
+
+    void assign(size_t n, const T &val) { this->resize(n, val); }
 
     void push_back(const T &val) noexcept {
         this->resize(this->_size + 1);
         this->_arr[this->_size - 1] = val;
     }
 
-//    void pop_back();
-//    void insert();
+    void pop_back() { resize(this->_size - 1); }
+
+    iterator insert(iterator position, const T &val) {
+        StepanVector<T> new_vec;
+        for(size_t i = 0; i < _size; i++) {
+            if (_arr[i] != *position) {
+                new_vec.push_back(_arr[i]);
+            } else {
+                new_vec.push_back(_arr[i]);
+                new_vec.push_back(val);
+            }
+        }
+
+        *this = new_vec;
+        return _arr;
+    }
+
+//    iterator insert(iterator position, size_t n, const T &val) { }  // Возникли трудности
 //    void erase();
 //    void swap();
 
-    void clear() noexcept { delete this->_arr; }
+    void clear() noexcept {
+        delete this->_arr;
+        this->_size = 0;
+    }
 
 //    void emplace();
 //    void emplace_back();
