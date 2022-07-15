@@ -43,6 +43,8 @@ public:
         _size = n;
     }
 
+    StepanVector(const size_t &n, const T &val) { resize(n, val); }
+
     StepanVector (const StepanVector<T> &SV) {
         _size = SV._size;
         _arr = new T[_size]{};
@@ -180,18 +182,24 @@ public:
         *this = new_vec;
         return _arr;
     }
-
 //    iterator insert(iterator position, size_t n, const T &val) { }  // Возникли трудности
-//    void erase();
-//    void swap();
+
+//    iterator erase(iterator position) { }
+//    iterator erase(iterator first, iterator last) { }
+
+    void swap(StepanVector<T> &x) {
+        StepanVector<T> tmp = x;
+        x = this;
+        this = tmp;
+    }
 
     void clear() noexcept {
         delete this->_arr;
         this->_size = 0;
     }
 
-//    void emplace();
-//    void emplace_back();
+//    void emplace();  // ???
+//    void emplace_back();  // ???
 
 //------------------------------------------------------------------------------------------------------------
     // Allocator
