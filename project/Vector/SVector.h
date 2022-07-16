@@ -94,14 +94,10 @@ namespace sstd {  // Stepan Standart Template Data
 //    const_iterator cend() {}
 //------------------------------------------------------------------------------------------------------------
         // Capacity
-        size_t size() const
+        size_t size() const noexcept { return _size; }
 
-        noexcept { return _size; }
-
-        size_t max_size() const
-
-        noexcept { return (size_t)(-1) / sizeof(T); }  // Не могу утверждать на сколько \
-    корректно это выражение
+        size_t max_size() const noexcept { return (size_t)(-1) / sizeof(T); }  // Не могу утверждать на \
+        // сколько корректно это выражение
 
         void resize(size_t n) {
             if (n < 0) {
@@ -133,22 +129,16 @@ namespace sstd {  // Stepan Standart Template Data
 
 //    size_t capacity() const {}  // ???
 
-        bool empty() const
-
-        noexcept { return this->_size == 0; }
+        bool empty() const noexcept { return this->_size == 0; }
 
 //    void reserve(size_t n) { }  // ???
 
 //    void shrink_to_fit() {}  // ???
 //------------------------------------------------------------------------------------------------------------
         // Element access
-        T &operator[](const size_t i)
+        T &operator[](const size_t i) noexcept { return _arr[i]; }
 
-        noexcept { return _arr[i]; }
-
-        T &operator[](const size_t i) const
-
-        noexcept { return _arr[i]; }
+        T &operator[](const size_t i) const noexcept { return _arr[i]; }
 
         T &at(const size_t i) {
             if (i < 0 && i > _size) {
@@ -172,13 +162,9 @@ namespace sstd {  // Stepan Standart Template Data
 
         T &back() const { return at(size() - 1); }
 
-        T *data()
+        T *data() noexcept { return _arr; }
 
-        noexcept { return _arr; }
-
-        T *data() const
-
-        noexcept { return _arr; }
+        T *data() const noexcept { return _arr; }
 
 //------------------------------------------------------------------------------------------------------------
         // Modifiers
@@ -194,9 +180,7 @@ namespace sstd {  // Stepan Standart Template Data
 
         void assign(size_t n, const T &val) { this->resize(n, val); }
 
-        void push_back(const T &val)
-
-        noexcept {
+        void push_back(const T &val) noexcept {
             this->resize(this->_size + 1);
             this->_arr[this->_size - 1] = val;
         }
@@ -217,6 +201,7 @@ namespace sstd {  // Stepan Standart Template Data
             *this = new_vec;
             return _arr;
         }
+
 //    iterator insert(iterator position, size_t n, const T &val) { }  // Возникли трудности
 
 //    iterator erase(iterator position) { }
@@ -228,9 +213,7 @@ namespace sstd {  // Stepan Standart Template Data
             this = tmp;
         }
 
-        void clear()
-
-        noexcept {
+        void clear() noexcept {
             delete[] this->_arr;
             this->_size = 0;
         }
