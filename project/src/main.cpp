@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "../Vector/stepanvector.h"
+#include "../Vector/SVector.h"
 
 using namespace std;
 

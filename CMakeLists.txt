@@ -8,7 +8,7 @@ add_executable(main
 #        ./project/include/stepanlist.h
 #        ./project/include/stepanqueue.h
 #        ./project/include/stepanstack.h
-        project/Vector/stepanvector.h
+        project/Vector/SVector.h
         ./project/src/main.cpp
 #        ./project/src/stepandoublelist.cpp
 #        ./project/src/stepanlist.cpp
