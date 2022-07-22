@@ -10,6 +10,14 @@ struct list_node {
     T _M_data;
     list_node<T> *_next = NULL;
     list_node<T> *_prev = NULL;
+
+    void next() {
+        this = this->_next;
+    }
+
+    void prev() {
+        this = this->_prev;
+    }
 };
 
 template<typename T>
@@ -34,26 +42,41 @@ public:
     }
 
     void rprint() {
-        while (_last != NULL) {
-            cout << _last->_M_data << " ";
-            _last = _last->_prev;
+        list_node<T> *_buf_node = _last;
+        while (_buf_node != NULL) {
+            cout << _buf_node->_M_data << " ";
+            _buf_node = _buf_node->_prev;
         }
         cout << endl;
     }
 
     SList<T> &operator=(const SList<T> &other) {
+        clear();
         this->_size = other._size;
         this->_first = other._first;
         this->_last = other._last;
     }
 
     //  Modifiers
+    void clear() {
+        size_t i = 0;
+        while (_first != NULL ) {
+            pop_back();
+            pop_front();
+            cout << ++i << endl;
+        }
+        _size = 0;
+        _first = _last = NULL;
+    }
+
+//    void insert();
+
     void push_back(const T &value) {
         list_node<T> *new_node = new list_node<T>;
         new_node->_M_data = value;
         new_node->_prev = _last;
         new_node->_next = NULL;
-        if (_last != 0) {
+        if (_last != NULL) {
             _last->_next = new_node;
         }
 
@@ -67,9 +90,59 @@ public:
     }
 
     void pop_back() {
+        if (_last == NULL && _first == NULL) {
+            return;
+        }
+
+        if (_last == _first) {
+            delete _first;
+            _first = _last = NULL;
+            return;
+        }
+
         list_node<T> *del_node = _last;
         _last = del_node->_prev;
         _last->_next = NULL;
+        delete del_node;
+
+        _size--;
+    }
+
+    void push_front(const T &value) {
+        list_node<T> *new_node = new list_node<T>;
+        new_node->_M_data = value;
+        new_node->_prev = NULL;
+        new_node->_next = _first;
+        if (_first != NULL) {
+            _first->_prev = new_node;
+        }
+
+        if (_size == 0) {
+            _first = _last = new_node;
+        } else {
+            _first = new_node;
+        }
+
+        _size++;
+    }
+
+    void pop_front() {
+        if (_last == NULL && _first == NULL) {
+            return;
+        }
+
+        if (_last == _first) {
+            delete _first;
+            _first = _last = NULL;
+            return;
+        }
+
+        list_node<T> *del_node = _first;
+        _first = del_node->_next;
+        _first->_prev = NULL;
+        delete del_node;
+
+        _size--;
     }
 };
 //template<typename T>
