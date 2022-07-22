@@ -20,28 +20,20 @@ namespace sstd {  // Stepan Standart Template Data
             T *_cur;
         public:
             iterator() {}
-
             iterator(T *first) : _cur(first) {}
 
             iterator &operator=(const iterator &IT) = default;  //  { _cur = IT._cur; }
 
             T &operator+(size_t n) { return *(_cur + n); }
-
             T &operator-(size_t n) { return *(_cur - n); }
-
-            T &operator++(int n) { return *_cur++; }
-
-            T &operator--(int n) { return *_cur--; }
-
+            T operator++(int n) { return *_cur++; }
+            T operator--(int n) { return *_cur--; }
             T &operator++() { return *++_cur; }
-
             T &operator--() { return *--_cur; }
-
 
             T &operator*() const { return *_cur; }
 
             bool operator==(const iterator &other) const { return _cur == other._cur; }
-
             bool operator!=(const iterator &other) const { return _cur != other._cur; }
         };
 
