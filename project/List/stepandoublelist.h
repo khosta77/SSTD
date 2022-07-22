@@ -10,26 +10,44 @@ struct list_node {
     T _M_data;
     list_node<T> *_next = NULL;
     list_node<T> *_prev = NULL;
-
-    void next() {
-        this = this->_next;
-    }
-
-    void prev() {
-        this = this->_prev;
-    }
 };
 
 template<typename T>
 class SList {
-private:
+protected:
     list_node<T> *_first;
     list_node<T> *_last;
     size_t _size;
 public:
+    //  Member functions
     SList() {
         _first = _last = NULL;
         _size = 0;
+    }
+
+    SList(const SList<T> &other) {
+        list_node<T> *_buf_node = other._first;
+        _first = _last = NULL;
+        _size = 0;
+        for (size_t i = 0; i < other.size(); i++) {
+            push_back(T(_buf_node->_M_data));
+            _buf_node = _buf_node->_next;
+        }
+    }
+
+    ~SList() {
+        clear();
+        delete _first;
+        delete _last;
+    }
+
+    SList<T> &operator=(const SList<T> &other) {
+        clear();
+        list_node<T> *_buf_node = other._first;
+        for (size_t i = 0; i < other.size(); i++) {
+            push_back(T(_buf_node->_M_data));
+            _buf_node = _buf_node->_next;
+        };
     }
 
     void print() {
@@ -50,20 +68,49 @@ public:
         cout << endl;
     }
 
-    SList<T> &operator=(const SList<T> &other) {
-        clear();
-        this->_size = other._size;
-        this->_first = other._first;
-        this->_last = other._last;
+    //  Element access
+    T front() {
+        if (_first != NULL) {
+            return _first->_M_data;
+        }
+        return NULL;
     }
 
+    T front() const {
+        if (_first != NULL) {
+            return _first->_M_data;
+        }
+        return NULL;
+    }
+
+    T back() {
+        if (_last != NULL) {
+            return _last->_M_data;
+        }
+        return NULL;
+    }
+
+    T back() const {
+        if (_last != NULL) {
+            return _last->_M_data;
+        }
+        return NULL;
+    }
+
+    //  Capacity
+    bool empty() const {
+        return _first != NULL;
+    }
+
+    size_t size() const {
+        return _size;
+    }
     //  Modifiers
     void clear() {
         size_t i = 0;
         while (_first != NULL ) {
             pop_back();
             pop_front();
-            cout << ++i << endl;
         }
         _size = 0;
         _first = _last = NULL;
