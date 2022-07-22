@@ -221,6 +221,6 @@ namespace sstd {  // Stepan Standart Template Data
 
     };
 
-};
+};  // Stepan Standart Template Data
 
 #endif // STEPANVECTOR_H
