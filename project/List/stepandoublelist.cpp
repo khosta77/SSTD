@@ -1,4 +1,4 @@
-#include "../include/stepandoublelist.h"
+#include "stepandoublelist.h"
 
 StepanDoubleList::StepanDoubleList(){
     first = last = NULL;

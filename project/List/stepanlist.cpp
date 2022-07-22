@@ -1,4 +1,4 @@
-#include "../include/stepanlist.h"
+#include "stepanlist.h"
 
 component_list *StepanList::previous(component_list *node){
     if (empty()) {
