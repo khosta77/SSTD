@@ -1,6 +1,6 @@
-# SVector
+# SList
 
-StepanVector - аналог std::vector. Проблема с итераторами.
+StepanList - аналог std::list. Проблема с итераторами.
 
 ##### Constructor & destructor
 * [X] (constructor)
