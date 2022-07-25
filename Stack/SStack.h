@@ -61,7 +61,7 @@ namespace sstd {
             clear();
             stack_node<T> *_buf_stack_node = other.first;
             for (size_t i = 0; i < other.size(); i++) {
-                push(_buf_stack_node->data);
+                push_end(_buf_stack_node->data);
                 _buf_stack_node = _buf_stack_node->next;
             }
 
