@@ -3,67 +3,101 @@
 
 #include <iostream>
 
-struct component_queue {
-    int data;
-    component_queue *next;
-};
+namespace sstd {
 
-class StepanQueue {
-private:
-    component_queue *first;
-public:
-    StepanQueue() {
-        first = NULL;
-    }
-    bool empty() {
-        return first == NULL;
-    }
-    void push(int data) {
-        component_queue *newqueue = first;
-        if(newqueue){
-            while (newqueue->next) {
-                newqueue = newqueue->next;
+    template<typename T>
+    struct queue_node {
+        T data;
+        queue_node<T> *next;
+    };
+
+    template<typename T>
+    class SQueue {
+    private:
+        queue_node<T> *first;
+    protected:
+
+        void clear() {
+            while (!empty()) {
+                pop();
             }
-            newqueue->next = new component_queue;
-            newqueue = newqueue->next;
-            newqueue->data = data;
-            newqueue->next = NULL;
         }
-        else {
-            first = new component_queue;
-            first->data = data;
-            first->next = NULL;
+
+    public:
+        SQueue() {
+            first = NULL;
         }
-    }
-    int top() {
-        if(!empty()){
-            return first->data;
+
+        SQueue(const SQueue<T> &other) {
+            clear();
+            this = other;
         }
-        return 0;
-    }
-    void pop() {
-        if (!empty()){
-            component_queue* newfirst = first->next;
+
+        ~SQueue() {
+            clear();
             delete first;
-            first = newfirst;
         }
-    }
-    size_t size() {
-        std::size_t size = 0;
-        if(!empty()){
-            component_queue *current = first;
-            while (current) {
-                size++;
-                current = current->next;
+
+        SStack<T> &operator=(const SStack<T> &other) {
+            clear();
+            stack_node<T> *_buf_stack_node = other.first;
+            for (size_t i = 0; i < other.size(); i++) {
+                push(_buf_stack_node->data);
+                _buf_stack_node = _buf_stack_node->next;
+            }
+
+            return *this;
+        }
+
+        bool empty() {
+            return first == NULL;
+        }
+
+        void push(T data) {
+            queue_node<T> *newqueue = first;
+            if (newqueue) {
+                while (newqueue->next) {
+                    newqueue = newqueue->next;
+                }
+                newqueue->next = new queue_node<T>;
+                newqueue = newqueue->next;
+                newqueue->data = data;
+                newqueue->next = NULL;
+            } else {
+                first = new queue_node<T>;
+                first->data = data;
+                first->next = NULL;
             }
         }
-        return size;
-    }
-    ~StepanQueue() {
-        while (!empty()) {
-            pop();
+
+        int top() {
+            if (!empty()) {
+                return first->data;
+            }
+            return 0;
         }
-    }
-};
+
+        void pop() {
+            if (!empty()) {
+                queue_node<T> *newfirst = first->next;
+                delete first;
+                first = newfirst;
+            }
+        }
+
+        size_t size() {
+            size_t size = 0;
+            if (!empty()) {
+                queue_node<T> *current = first;
+                while (current) {
+                    size++;
+                    current = current->next;
+                }
+            }
+            return size;
+        }
+    };
+
+};  // Stepan Standart Template Data
 
 #endif // STEPANQUEUE_H
